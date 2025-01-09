@@ -9,7 +9,7 @@ def spin_reels():
         messagebox.showerror("Error", "Bet exceeds available balance!")
         return
 
-    symbols = ["🍒", "🍋", "🔔", "⭐", "7", "BAR"]
+    symbols = ["🍒", "🍋", "🔔", "⭐", "7", "BAR", "💎"]
     reels = [random.choice(symbols) for _ in range(3)]
 
     # Update the reels display
@@ -38,15 +38,15 @@ def spin_reels():
 def calculate_payout(reels, bet):
     """Calculate the payout based on the reels and bet."""
     payout_table = {
-        ("🍒", "🍒", "🍒"): 100,
         ("7", "7", "7"): 1000,
+        ("💎", "💎", "💎"): 75,
         ("🔔", "🔔", "🔔"): 50,
         ("BAR", "BAR", "BAR"): 25,
     }
     if reels.count("🍒") == 3:
         return 100 * bet
     elif reels.count("🍒") == 2:
-        return 10 * bet
+        return 2 * bet
     elif reels.count("🍒") == 1:
         return 1 * bet
     elif tuple(reels) in payout_table:
