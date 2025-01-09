@@ -14,7 +14,7 @@ P(symbol) = 1/7
 
 ### 3 🍒:
 The probability of 🍒 appearing on all 3 reels is:
-P(3🍒) = (1/7)^3 = 1 / 343 ≈ 
+P(3🍒) = (1/7)^3 = 1 / 343 ≈ 0.29%
 
 
 ### 2 🍒:
