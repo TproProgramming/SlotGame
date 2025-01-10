@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
+from PIL import Image, ImageTk
 import random
 
 def spin_reels():
@@ -9,13 +10,13 @@ def spin_reels():
         messagebox.showerror("Error", "Bet exceeds available balance!")
         return
 
-    symbols = ["🍒", "🍋", "🔔", "⭐", "7", "BAR", "💎"]
+    symbols = ["cherries", "horseshoe", "bell", "clover", "7", "bar", "diamond"]
     reels = [random.choice(symbols) for _ in range(3)]
 
-    # Update the reels display
-    reel_1.config(text=reels[0])
-    reel_2.config(text=reels[1])
-    reel_3.config(text=reels[2])
+    # Update the reels display with images
+    reel_1.config(image=images[reels[0]])
+    reel_2.config(image=images[reels[1]])
+    reel_3.config(image=images[reels[2]])
 
     # Calculate the payout
     payout = calculate_payout(reels, bet_size.get())
@@ -39,15 +40,17 @@ def calculate_payout(reels, bet):
     """Calculate the payout based on the reels and bet."""
     payout_table = {
         ("7", "7", "7"): 1000,
-        ("💎", "💎", "💎"): 75,
-        ("🔔", "🔔", "🔔"): 50,
-        ("BAR", "BAR", "BAR"): 25,
+        ("diamond", "diamond", "diamond"): 500,
+        ("clover", "clover", "clover"): 100,
+        ("bell", "bell", "bell"): 50,
+        ("horseshoe", "horseshoe", "horseshoe"): 50,
+        ("bar", "bar", "bar"): 25,
     }
-    if reels.count("🍒") == 3:
-        return 100 * bet
-    elif reels.count("🍒") == 2:
+    if reels.count("cherries") == 3:
+        return 50 * bet
+    elif reels.count("cherries") == 2:
         return 2 * bet
-    elif reels.count("🍒") == 1:
+    elif reels.count("cherries") == 1:
         return 1 * bet
     elif tuple(reels) in payout_table:
         return payout_table[tuple(reels)] * bet
@@ -73,38 +76,46 @@ root.title("Slot Machine")
 root.geometry("500x500")
 root.config(bg="black")
 
-# Static background
-background = tk.Label(root, bg="darkblue")
-background.place(relwidth=1, relheight=1)
+# Load images
+image_files = {
+    "cherries": "images/cherries.png",
+    "horseshoe": "images/horseshoe.png",
+    "bell": "images/bell.png",
+    "clover": "images/clover.png",
+    "7": "images/7.png",
+    "bar": "images/bar.png",
+    "diamond": "images/diamond.png",
+}
+images = {name: ImageTk.PhotoImage(Image.open(path).resize((100, 100))) for name, path in image_files.items()}
 
 # Display Labels
-balance_label = tk.Label(root, text=f"Balance: ${balance}", font=("Arial", 14), fg="white", bg="darkblue")
+balance_label = tk.Label(root, text=f"Balance: ${balance}", font=("Arial", 14), fg="yellow", bg="darkblue")
 balance_label.pack(pady=10)
 
-last_win_label = tk.Label(root, text=f"Last Win: ${last_win}", font=("Arial", 14), fg="white", bg="darkblue")
+last_win_label = tk.Label(root, text=f"Last Win: ${last_win}", font=("Arial", 14), fg="yellow", bg="darkblue")
 last_win_label.pack(pady=10)
 
 bet_size = tk.IntVar(value=1)
-bet_label = tk.Label(root, text="Bet Size:", font=("Arial", 14), fg="white", bg="darkblue")
+bet_label = tk.Label(root, text="Bet Size:", font=("Arial", 14), fg="yellow", bg="darkblue")
 bet_label.pack(pady=5)
-bet_value_label = tk.Label(root, textvariable=bet_size, font=("Arial", 14), fg="white", bg="darkblue")
+bet_value_label = tk.Label(root, textvariable=bet_size, font=("Arial", 14), fg="yellow", bg="darkblue")
 bet_value_label.pack(pady=5)
 
 # Reels Display
 reel_frame = tk.Frame(root, bg="darkblue")
 reel_frame.pack(pady=20)
 
-reel_1 = tk.Label(reel_frame, text="🍒", font=("Arial", 30), fg="white", bg="darkblue")
+reel_1 = tk.Label(reel_frame, image=images["cherries"], bg="darkblue")
 reel_1.pack(side="left", padx=10)
 
-reel_2 = tk.Label(reel_frame, text="🍋", font=("Arial", 30), fg="white", bg="darkblue")
+reel_2 = tk.Label(reel_frame, image=images["clover"], bg="darkblue")
 reel_2.pack(side="left", padx=10)
 
-reel_3 = tk.Label(reel_frame, text="🔔", font=("Arial", 30), fg="white", bg="darkblue")
+reel_3 = tk.Label(reel_frame, image=images["bell"], bg="darkblue")
 reel_3.pack(side="left", padx=10)
 
 # Result Label
-result_label = tk.Label(root, text="", font=("Arial", 14), fg="white", bg="darkblue")
+result_label = tk.Label(root, text="", font=("Arial", 14), fg="yellow", bg="darkblue")
 result_label.pack(pady=10)
 
 # Control Buttons
