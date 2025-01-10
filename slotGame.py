@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import random
+import pygame 
 
 def spin_reels():
     """Spin the slot machine reels and update the GUI."""
@@ -24,6 +25,9 @@ def spin_reels():
     if payout > 0:
         result_label.config(text=f"You win ${payout}!", fg="green")
         balance += payout
+        win_sound.play()
+        if payout > 49:
+            jackpot_sound.play(2)
     else:
         result_label.config(text="No win, better luck next time!", fg="red")
         balance -= bet_size.get()
@@ -65,6 +69,22 @@ def decrease_bet():
     """Decrease the bet size."""
     if bet_size.get() > 1:
         bet_size.set(bet_size.get() - 1)
+        
+# Initialize pygame mixer for music
+pygame.mixer.init()
+
+# Load and play background music
+pygame.mixer.music.load("sound/bgMusic.wav")
+pygame.mixer.music.set_volume(0.5)  # Adjust the volume (0.0 to 1.0)
+pygame.mixer.music.play(-1)  # Loop indefinitely
+
+# Load win sound
+win_sound = pygame.mixer.Sound("sound/smallWin.wav")
+win_sound.set_volume(1)  # Adjust the volume for the win sound
+
+#Load jackpot win sound
+jackpot_sound = pygame.mixer.Sound("sound/jackpotSound.wav")
+jackpot_sound.set_volume(1)
 
 # Initialize the game
 balance = 100
@@ -74,7 +94,7 @@ last_win = 0
 root = tk.Tk()
 root.title("Slot Machine")
 root.geometry("500x500")
-root.config(bg="black")
+root.config(bg="darkblue")
 
 # Load images
 image_files = {
