@@ -1,50 +1,95 @@
-# Probability of Winning on this Slot Machine
+# Slot Machine Game
 
-## Symbol Distribution:
-There are 7 symbols on each reel:
+A simple slot machine simulation built using Python's `tkinter` library for the GUI and `pygame` for background music and sound effects.
 
-- 🍒, 🍋, 🔔, ⭐, 7, BAR, 💎
-- 🍒, 🍋, 🔔, ⭐, 7, BAR, 💎
+## Features
+- Spin the reels and try your luck to win!
+- Dynamic payout calculation based on reel results.
+- Adjustable bet size.
+- Background music and sound effects for wins and jackpots.
+- Graphical user interface with reel images and real-time balance updates.
 
-The probability of landing any specific symbol on one reel is: 
-P(symbol) = 1/7
+## Installation
+### Prerequisites
+Ensure you have the following installed:
+- Python 3.x
+- Required Python libraries:
+  - `tkinter` (usually included with Python)
+  - `Pillow` (for image handling)
+  - `pygame` (for music and sound effects)
 
+To install the necessary libraries, run:
+```bash
+pip install pillow pygame
+```
 
-## Recalculated Probabilities:
+### File Structure
+Ensure the following directory structure:
+```
+project_directory/
+|-- images/
+|   |-- cherries.png
+|   |-- horseshoe.png
+|   |-- bell.png
+|   |-- clover.png
+|   |-- 7.png
+|   |-- bar.png
+|   |-- diamond.png
+|-- sound/
+|   |-- bgMusic.wav
+|   |-- smallWin.wav
+|   |-- jackpotSound.wav
+|-- slot_machine.py
+```
 
-### 3 🍒:
-The probability of 🍒 appearing on all 3 reels is:
-P(3🍒) = (1/7)^3 = 1 / 343 ≈ 0.29%
+Place all the corresponding images and sound files in the `images` and `sound` folders, respectively.
 
+## Usage
+1. Navigate to the project directory:
+   ```bash
+   cd project_directory
+   ```
+2. Run the script:
+   ```bash
+   python slot_machine.py
+   ```
+3. Use the buttons to adjust the bet size, spin the reels, and try your luck!
 
-### 2 🍒:
-The probability of exactly 2 🍒 and one non-🍒 symbol:
-P(2 🍒) = (3 choose 2) * (1 / 7)^2 * (6 / 7) = 3 * 1 / 49 * 6 / 7 = 18 / 343 ≈ 5.25%
+## Gameplay
+- **Balance**: Starts with $100.
+- **Bet Size**: Adjustable using the `+` and `-` buttons.
+- **Spin**: Click the `Spin` button to play.
+- **Win Conditions**: The payout depends on the combination of symbols displayed on the reels. Special payouts for matching symbols and cherries.
+- **Game Over**: The game ends when your balance reaches $0.
 
+## Payout Table
+| Combination                       | Payout Multiplier |
+|-----------------------------------|-------------------|
+| 7 - 7 - 7                         | 1000x             |
+| Diamond - Diamond - Diamond       | 500x              |
+| Clover - Clover - Clover          | 100x              |
+| Bell - Bell - Bell                | 50x               |
+| Horseshoe - Horseshoe - Horseshoe | 50x               |
+| Bar - Bar - Bar                   | 25x               |
+| 3 Cherries                        | 50x               |
+| 2 Cherries                        | 2x                |
+| 1 Cherry                          | 1x                |
 
-### 1 🍒:
-The probability of exactly 1 🍒 and two non-🍒 symbols:
-P(1 🍒) = (3 choose 1) * (1 / 7)^1 * (6 / 7)^2 = 3 * 1 / 7 * 36 / 49 = 108 / 343 ≈ 31.49%
+## Sound Effects
+- Background music plays continuously.
+- **Win sound**: Plays when you win a small amount.
+- **Jackpot sound**: Plays for big wins.
 
+## Customization
+You can customize the following:
+- **Starting Balance**: Modify the `balance` variable.
+- **Payout Rules**: Edit the `payout_table` dictionary and cherry-specific conditions in the `calculate_payout` function.
+- **Images and Sounds**: Replace the files in the `images` and `sound` folders with your own.
 
-## Specific Matches in payout_table:
+## License
+This project is open-source and available under the [MIT License](LICENSE).
 
-- **7, 7, 7:**  
-P(7,7,7) = (1 / 7)^3 = 1 / 343 ≈ 0.29%
-
-- **🔔, 🔔, 🔔:**  
-P(🔔,🔔,🔔) = (1 / 7)^3 = 1 / 343 ≈ 0.29%
-
-
-- **BAR, BAR, BAR:**  
-P(BAR,BAR,BAR) = (1 / 7)^3 = 1 / 343 ≈ 0.29%
-
-
-## Total Probability of Winning:
-Adding up all the probabilities:
-P(win) = P(3 🍒) + P(2 🍒) + P(1 🍒) + P(7,7,7) + P(🔔,🔔,🔔) + P(BAR,BAR,BAR) P(win) = 1 / 343 + 18 / 343 + 108 / 343 + 1 / 343 + 1 / 343 + 1 / 343 = 130 / 343 ≈ 37.91%
-
-
-## Summary:
-By adding the diamond symbol, the probability of winning decreases from **43.52%** to approximately **37.91%**. This is a more reasonable win probability for a slot machine, though still relatively high. Typical casino standards are around (~30% or less).
+## Acknowledgments
+- [Pillow](https://python-pillow.org/) for image handling.
+- [Pygame](https://www.pygame.org/) for sound and music integration.
 
